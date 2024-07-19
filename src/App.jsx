@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useQuery } from "@tanstack/react-query";
+import Grid from "@mui/material/Grid";
+import Cards from "./components/cards/Cards";
+import Charts from "./components/chart/Charts";
+import CountryInput from "./components/countryInput/CountryInput";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const {
+    data: countries = [],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["countries"],
+  });
 
+  if (isLoading) return <div>Loading...</div>;
+
+  if (error) return <div>{"An error has occurred: " + error.message}</div>;
+
+  console.log(countries["Nigeria"]["date"]);
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Grid 
+      container
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      sx={{ minHeight: '100vh' }}
+      gap='0.5rem'
+      >
+      <h1>Monkey Pox Tracker</h1>
+      <Cards />
+      <CountryInput />
+      <Charts />
+    </Grid>
+  );
 }
-
-export default App
