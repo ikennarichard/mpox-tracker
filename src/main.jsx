@@ -9,15 +9,15 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import CssBaseline from '@mui/material/CssBaseline';
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       queryFn: async () => {
         const response = await fetch(
-          'https://raw.githubusercontent.com/ikennarichard/mpox-flexisaf/main/owid-monkeypox-data.json'
+          'https://raw.githubusercontent.com/ikennarichard/mpox-flexisaf/main/MPX-Country-Data.json'
         );
         if (!response.ok) {
-          throw new Error('Failed to fetch countries');
+          throw new Error('Failed to load countries');
         }
         return response.json();
       },
